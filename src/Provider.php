@@ -37,7 +37,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     {
         $response = $this->getHttpClient()->get('https://api.douban.com/v2/user/~me', [
             'headers' => [
-                'Authorization' => 'Bearer ' . $token,
+                'Authorization' => 'Bearer '.$token,
             ]
         ]);
 
@@ -52,7 +52,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id' => $user['id'], 
+            'id' => $user['id'],
             'nickname' => $user['name'],
             'avatar' => $user['large_avatar'],
             'name' => null,
@@ -101,5 +101,4 @@ class Provider extends AbstractProvider implements ProviderInterface
 
         return $response;
     }
-
 }
