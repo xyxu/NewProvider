@@ -1,6 +1,6 @@
 {
-    "name": "socialiteproviders/weibo",
-    "description": "weibo.com OAuth2 Provider for Laravel Socialite",
+    "name": "socialiteproviders/douban",
+    "description": "douban.com OAuth2 Provider for Laravel Socialite",
     "license": "MIT",
     "authors": [{
         "name": "xyxu",
@@ -12,7 +12,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SocialiteProviders\\Weibo\\": "src/"
+            "SocialiteProviders\\Douban\\": "src/"
         }
     }
 }

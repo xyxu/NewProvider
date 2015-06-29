@@ -1,1 +1,1 @@
-# Laravel Socialite weibo.com OAuth2 Provider
+# Laravel Socialite douban.com OAuth2 Provider

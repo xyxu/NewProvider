@@ -1,6 +1,6 @@
 <?php
 
-namespace SocialiteProviders\Weibo;
+namespace SocialiteProviders\Douban;
 
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
@@ -15,7 +15,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://api.weibo.com/oauth2/authorize', $state);
+        return $this->buildAuthUrlFromBase('https://www.douban.com/service/auth2/auth', $state);
     }
 
     /**
@@ -25,7 +25,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return 'https://api.weibo.com/oauth2/access_token';
+        return 'https://www.douban.com/service/auth2/token';
     }
 
     /**
@@ -35,11 +35,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $uid = $this->getUid($token);
-        $response = $this->getHttpClient()->get('https://api.weibo.com/2/users/show.json', [
-            'query' => [
-                'access_token' => $token,
-                'uid' => $uid,
+        $response = $this->getHttpClient()->get('https://api.douban.com/v2/user/~me', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
             ]
         ]);
 
@@ -54,9 +52,9 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id' => $user['idstr'], 
+            'id' => $user['id'], 
             'nickname' => $user['name'],
-            'avatar' => $user['avatar_large'],
+            'avatar' => $user['large_avatar'],
             'name' => null,
             'email' => null,
         ]);
@@ -82,7 +80,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     public function getAccessToken($code)
     {
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
-            'query' => $this->getTokenFields($code),
+            'form_params' => $this->getTokenFields($code),
         ]);
 
         return $this->parseAccessToken($response->getBody()->getContents());
@@ -102,24 +100,6 @@ class Provider extends AbstractProvider implements ProviderInterface
         }
 
         return $response;
-    }
-
-    /**
-        * @Synopsis  get uid
-        *
-        * @Param $token
-        *
-        * @Returns  uid string 
-     */
-    protected function getUid($token)
-    {
-        $response = $this->getHttpClient()->get('https://api.weibo.com/2/account/get_uid.json', [
-            'query' => [
-                'access_token' => $token,
-            ],
-        ]);
-        
-        return json_decode($response->getBody(), true)['uid'];
     }
 
 }
