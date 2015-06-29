@@ -38,7 +38,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         $response = $this->getHttpClient()->get('https://api.douban.com/v2/user/~me', [
             'headers' => [
                 'Authorization' => 'Bearer '.$token,
-            ]
+            ],
         ]);
 
         return json_decode($this->removeCallback($response->getBody()->getContents()), true);
