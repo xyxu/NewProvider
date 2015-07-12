@@ -32,7 +32,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     {
         $session = $this->request->getSession();
 
-        return $url. '?'. http_build_query($this->getCodeFields($state), '', '&', $this->encodingType). '#wechat_redirect';
+        return $url.'?'.http_build_query($this->getCodeFields($state), '', '&', $this->encodingType).'#wechat_redirect';
     }
 
     protected function getCodeFields($state = null)
@@ -66,7 +66,7 @@ class Provider extends AbstractProvider implements ProviderInterface
                 'access_token' => $token,
                 'openid' => $this->openId,
                 'lang' => 'zh_CN',    //简体中文
-            ]
+            ],
         ]);
 
         return json_decode($response->getBody(), true);
@@ -83,7 +83,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             'id' => $user['openid'],
             'nickname' => $user['nickname'],
             'avatar' => $user['headimgurl'],
-            'name' => null, 
+            'name' => null,
             'email' => null,
         ]);
     }
@@ -123,7 +123,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         $this->openId = $jsonArray['openid'];//记录openid
 
         return $jsonArray['access_token'];
-    }    
+    }
 
     /**
      * @param mixed $response
@@ -140,5 +140,4 @@ class Provider extends AbstractProvider implements ProviderInterface
 
         return $response;
     }
-
 }
