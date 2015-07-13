@@ -1,2 +1,1 @@
-# NewProvider
-Submit Pull Requests here for new providers.  [See the docs](http://socialiteproviders.github.io/#contribute) for more information.
+# Laravel Socialite weixin.qq.com(WeChat) web OAuth2 Provider
